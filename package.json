@@ -1,0 +1,37 @@
+{
+  "name": "axios-debug",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://yuriyaza.github.io/axios-debug",
+  "scripts": {
+    "start": "parcel src/*.html",
+    "build": "parcel build src/*.html --public-url /axios-debug/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuriyaza/axios-debug.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuriyaza/axios-debug/issues"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "bootstrap": "^5.2.3",
+    "firebase": "^9.21.0",
+    "joi": "^17.9.2",
+    "modern-normalize": "^1.1.0",
+    "notiflix": "^3.2.6",
+    "scroll-lock": "^2.1.5",
+    "swiper": "^9.2.4"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.6.0",
+    "parcel": "^2.6.0",
+    "parcel-reporter-clean-dist": "^1.0.4",
+    "posthtml-include": "^1.7.4"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead"
+}
