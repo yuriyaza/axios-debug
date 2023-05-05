@@ -4,15 +4,14 @@ export class BookAPI {
     // #BASE_URL = 'https://books-backend.p.goit.global/books/';
 
 async getCategoryList(){
-    
-    try {
+    // try {
         const response = await axios.get('https://books-backend.p.goit.global/books/category-list');
         console.log('cat-list api');
-        console.log(response.data);
+        console.log(response);
         return response.data;
-    } catch (error) {
+    // } catch (error) {
         console.log(error);
-    }
+    // }
     };
 
     async getTopBooks() {
