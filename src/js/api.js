@@ -1,41 +1,54 @@
 import axios from 'axios';
 
-export class Api {
-  #SOURCE_URL = 'https://pixabay.com/api/';
-  #API_KEY = '35549464-6e431a9fbd4d75e0b6b25f5be';
+export class BookAPI {
+    // #BASE_URL = 'https://books-backend.p.goit.global/books/';
 
-  constructor() {
-    this.lastSearch = '';
-    this.perPage = 40;
-    this.currentPage = 1;
-    this.isNewSearch = false;
-    this.isEndOfPages = false;
-  }
-
-  async getData(query) {
-    if (query !== this.lastSearch) {
-      this.isNewSearch = true;
-      this.currentPage = 1;
-    } else {
-      this.isNewSearch = false;
+async getCategoryList(){
+    
+    try {
+        const response = await axios.get('https://books-backend.p.goit.global/books/category-list');
+        console.log('cat-list api');
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.log(error);
     }
+    };
 
-    const response = await axios.get(this.#SOURCE_URL, {
-      params: {
-        key: this.#API_KEY,
-        q: query,
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: true,
-        per_page: this.perPage,
-        page: this.currentPage,
-      },
-    });
+    async getTopBooks() {
+        try {
+            const response = await axios.get('https://books-backend.p.goit.global/books/top-books');
+            console.log('top books api');
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-    this.lastSearch = query;
-    this.isEndOfPages =
-      this.perPage * this.currentPage >= response.data.totalHits;
-    this.currentPage += 1;
-    return response;
-  }
-}
+    async getCategory(data) {
+        const category = data;
+        console.log(category);
+        try {
+            const response = await axios.get(`https://books-backend.p.goit.global/books/category?category=Audio%20Fiction`);
+            console.log('category api');
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    async getBookById(data) {
+        const id = data;
+        try {            
+            const response = await axios.get(`https://books-backend.p.goit.global/books/${id}`);
+            console.log('book api');
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
+};

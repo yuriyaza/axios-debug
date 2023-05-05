@@ -7,4 +7,3 @@ import './js/header';
 import './js/modal-window';
 import './js/shopping-list';
 import './js/support-ukraine';
-import './js/api-use';
