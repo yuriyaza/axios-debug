@@ -51,4 +51,4 @@ async getCategoryList(){
         }
     };
     
-};
+};  
