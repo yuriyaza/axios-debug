@@ -52,3 +52,9 @@ async getCategoryList(){
     };
     
 };
+
+(function fn1() { 
+    console.log('Викликаю сама себе');
+})();
+
+
