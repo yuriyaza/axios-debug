@@ -8,3 +8,13 @@
   color: var(--color-gray);
   overflow: scroll;
 }
+
+.category-li:not(:last-child) {
+  margin-bottom: 24px;
+}
+
+.upper-case {
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-violet);
+}
