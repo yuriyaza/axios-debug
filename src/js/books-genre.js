@@ -2,7 +2,7 @@ import { BookAPI } from './api';
 
 
 
-catBooksEl = document.querySelector('.books-genre');
+// catBooksEl = document.querySelector('.books-genre');
 const api = new BookAPI();
 
 
