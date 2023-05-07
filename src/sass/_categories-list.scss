@@ -12,9 +12,14 @@
 .category-li:not(:last-child) {
   margin-bottom: 24px;
 }
-
-.upper-case {
+.upper-case{
   text-transform: uppercase;
   font-weight: 700;
   color: var(--color-violet);
+}
+.dark-theme .categories-list{
+  color: rgba(255, 255, 255, 0.6);
+}
+.dark-theme .upper-case{
+  color: var(--color-orange);
 }

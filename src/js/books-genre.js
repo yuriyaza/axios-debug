@@ -1,31 +1,25 @@
-import { BookAPI } from './api';
-
-
-
-// catBooksEl = document.querySelector('.books-genre');
-const api = new BookAPI();
-
-
-
-async function getData() {
-    console.log('local storage');
-    const category = await api.getCategory();
-    localStorage.setItem('books-genre', JSON.stringify(category));
-}
-getData();
-
-
 // ===== Отримання даних із сервера та створення динамічної розмітки =====
 
-import { Notify } from 'notiflix';
 import { BookAPI } from './api';
-const bookApi = new BookAPI();
+import { Notify } from 'notiflix';
 
-export async function renderSectionBooksGenre(genreName) {
+const bookApi = new BookAPI();
+const spinner = document.querySelector('.spinner');
+
+Notify.init({ showOnlyTheLastOne: true, clickToClose: true });
+
+export async function renderSectionBooksGenre(genreName, categoryName) {
+  document.querySelector('.books-content').innerHTML = '';
+  spinner.classList.remove('visually-hidden');
+
   const backEndData = await booksGenreGetFromBackend(genreName);
   console.log(backEndData);
-  const markup = booksGenreCreateMarkup(genreName, backEndData);
+
+  if (backEndData.length === 0) Notify.failure('Books not found');
+  const markup = booksGenreCreateMarkup(categoryName, backEndData);
   document.querySelector('.books-content').innerHTML = markup;
+
+  spinner.classList.add('visually-hidden');
 }
 
 async function booksGenreGetFromBackend(genreName) {
@@ -35,12 +29,12 @@ async function booksGenreGetFromBackend(genreName) {
 function booksGenreCreateMarkup(genreName, backEndBookList) {
   const genreNameByWord = genreName.split(' ');
   const genreNameFirstWords = genreNameByWord
-    .slice(0, genreNameByWord.length-1)
+    .slice(0, genreNameByWord.length - 1)
     .join(' ');
   const genreNameLastWords = genreNameByWord
-    .slice(genreNameByWord.length-1)
+    .slice(genreNameByWord.length - 1)
     .join(' ');
-  
+
   let markup = '';
   markup += `
     <h1 class="books-genre-title">${genreNameFirstWords}&nbsp;<span class="books-genre-title-attribute">${genreNameLastWords}</span></h1>
@@ -56,9 +50,9 @@ function booksGenreCreateMarkup(genreName, backEndBookList) {
 function booksGenreCreateOneCard(backEndBookList) {
   return `
       <li class="books-genre-item">
-        <a href="#" class="books-genre-link" rel=" " data-id=" ">
+        <a class="books-genre-link" href="#" data-modal-open data-id=" ">
           <div class="books-card">
-            <img class="books-card-title-img" src="${backEndBookList.book_image}" alt="${backEndBookList.title}" width="" height="" loading="lazy">
+            <img class="books-card-title-img" src="${backEndBookList.book_image}" alt="${backEndBookList.title}" loading="lazy">
           </div>
           <div class="books-card-info">
             <h3 class="books-card-title">${backEndBookList.title}</h3>
@@ -69,7 +63,17 @@ function booksGenreCreateOneCard(backEndBookList) {
   `;
 }
 
-// Перевірка роботи
-// renderSectionBooksGenre('Audio Fiction');
-
 // ===== Кінець блоку отримання даних із сервера та створення динамічної розмітки =====
+
+// function hideInvisibleBooks() {
+//   let booksCountOnScreen = 1;
+//   if (window.innerWidth >= 768) booksCountOnScreen = 3;
+//   if (window.innerWidth >= 1440) booksCountOnScreen = 5;
+
+//   const booksVisible = document.querySelectorAll('.books-genre-item');
+//   booksVisible.forEach((book, index) => {
+//     if (index >= booksCountOnScreen) {
+//       book.classList.add('visually-hidden');
+//     } else book.classList.remove('visually-hidden');
+//   });
+// }
