@@ -1,9 +1,9 @@
 <div class="shopping-list-container">
     <h1 class="shopping-list-title">Shopping <span class="list-title">List</span></h1>
 
-    <div class="shopping-list-empty shopping-list-filled">
+    <div class="shopping-list-empty">
       <p class="shopping-list-empty-message">This page is empty, add some books and proceed to order.</p>
-      <picture class="shopping-list-img">
+      <picture class="shopping-list-empty-img">
         <source
           srcset="
             ./images/books-desk-min.png    1x,
@@ -31,5 +31,8 @@
         />
       </picture>
     </div>
-    <div class="shopping-list"></div>
+    <div class="shopping-list">
+      <div id="list" class="list-group"></div>
+    </div>
+    <div id="pagination" class="my-4"></div>
   </div>

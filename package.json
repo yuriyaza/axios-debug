@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "homepage": "https://yuriyaza.github.io/axios-debug",
+  "namers": [
+    "parcel-namer-without-hash"
+  ],
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /axios-debug/"
+    "build": "parcel build --no-content-hash src/*.html --public-url /axios-debug/"
   },
   "repository": {
     "type": "git",
@@ -25,16 +28,18 @@
     "joi": "^17.9.2",
     "modern-normalize": "^1.1.0",
     "notiflix": "^3.2.6",
+    "overlayscrollbars": "^2.1.1",
     "scroll-lock": "^2.1.5",
     "swiper": "^9.2.4"
   },
   "devDependencies": {
-    "@parcel/packager-raw-url": "^2.6.0",
-    "@parcel/packager-xml": "^2.6.0",
-    "@parcel/transformer-sass": "^2.6.0",
-    "@parcel/transformer-webmanifest": "^2.6.0",
-    "@parcel/transformer-xml": "^2.6.0",
-    "parcel": "^2.6.0",
+    "@parcel/packager-raw-url": "^2.8.3",
+    "@parcel/packager-xml": "^2.8.3",
+    "@parcel/transformer-sass": "^2.8.3",
+    "@parcel/transformer-webmanifest": "^2.8.3",
+    "@parcel/transformer-xml": "^2.8.3",
+    "parcel": "^2.8.3",
+    "parcel-namer-without-hash": "^0.0.1",
     "parcel-reporter-clean-dist": "^1.0.4",
     "posthtml-include": "^1.7.4"
   },

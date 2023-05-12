@@ -1,29 +1,25 @@
-// ===== Отримання даних із сервера та створення динамічної розмітки =====
-
 import { BookAPI } from './api';
 import { Notify } from 'notiflix';
+import { openModalBookDetails } from './modal-window';
 
 const bookApi = new BookAPI();
-const spinner = document.querySelector('.spinner');
+const spinner = document.querySelector('.spinner-wrapper');
 
 Notify.init({ showOnlyTheLastOne: true, clickToClose: true });
 
 export async function renderSectionBooksGenre(genreName, categoryName) {
   document.querySelector('.books-content').innerHTML = '';
-  spinner.classList.remove('visually-hidden');
+  spinner.classList.remove('hidden');
 
-  const backEndData = await booksGenreGetFromBackend(genreName);
-  console.log(backEndData);
-
+  const backEndData = await bookApi.getCategory(genreName);
   if (backEndData.length === 0) Notify.failure('Books not found');
+
   const markup = booksGenreCreateMarkup(categoryName, backEndData);
   document.querySelector('.books-content').innerHTML = markup;
+  window.scrollTo(0, 0);
 
-  spinner.classList.add('visually-hidden');
-}
-
-async function booksGenreGetFromBackend(genreName) {
-  return await bookApi.getCategory(genreName);
+  spinner.classList.add('hidden');
+  addUserClickListener();
 }
 
 function booksGenreCreateMarkup(genreName, backEndBookList) {
@@ -38,7 +34,7 @@ function booksGenreCreateMarkup(genreName, backEndBookList) {
   let markup = '';
   markup += `
     <h1 class="books-genre-title">${genreNameFirstWords}&nbsp;<span class="books-genre-title-attribute">${genreNameLastWords}</span></h1>
-    <ul class="books-genre-card-conteiner">
+    <ul class="books-genre-card-container">
   `;
   markup += backEndBookList.map(booksGenreCreateOneCard).join('');
   markup += `
@@ -50,30 +46,27 @@ function booksGenreCreateMarkup(genreName, backEndBookList) {
 function booksGenreCreateOneCard(backEndBookList) {
   return `
       <li class="books-genre-item">
-        <a class="books-genre-link" href="#" data-modal-open data-id=" ">
-          <div class="books-card">
-            <img class="books-card-title-img" src="${backEndBookList.book_image}" alt="${backEndBookList.title}" loading="lazy">
+          <div class="books-card" data-action="quick-view" data-id="${backEndBookList._id}">
+            <img class="books-card-title-img" src="${backEndBookList.book_image}" alt="${backEndBookList.title}" loading="lazy">                   
+            <div class="quick-view">QUICK VIEW</div>
           </div>
           <div class="books-card-info">
             <h3 class="books-card-title">${backEndBookList.title}</h3>
             <p class="books-card-autor">${backEndBookList.author}</p>
           </div>
-        </a> 
       </li>
   `;
 }
+function addUserClickListener() {
+  const categoryEls = document.querySelectorAll('.books-genre-card-container');
+  categoryEls.forEach(categoryEl => {
+    categoryEl.addEventListener('click', onUserClick);
+  });
+}
 
-// ===== Кінець блоку отримання даних із сервера та створення динамічної розмітки =====
-
-// function hideInvisibleBooks() {
-//   let booksCountOnScreen = 1;
-//   if (window.innerWidth >= 768) booksCountOnScreen = 3;
-//   if (window.innerWidth >= 1440) booksCountOnScreen = 5;
-
-//   const booksVisible = document.querySelectorAll('.books-genre-item');
-//   booksVisible.forEach((book, index) => {
-//     if (index >= booksCountOnScreen) {
-//       book.classList.add('visually-hidden');
-//     } else book.classList.remove('visually-hidden');
-//   });
-// }
+function onUserClick(event) {
+  if (event.target.parentNode.dataset.action === 'quick-view') {
+    const bookID = event.target.parentNode.dataset.id;
+    openModalBookDetails(bookID);
+  }
+}
